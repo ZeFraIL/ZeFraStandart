@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_about_me"
+        android:title="About Me" />
+    <item
+        android:id="@+id/nav_guide"
+        android:title="Guide" />
+    <item
+        android:id="@+id/nav_feedback"
+        android:title="Feedback" />
+    <item
+        android:id="@+id/nav_my_diary"
+        android:title="My Diary" />
+    <item
+        android:id="@+id/nav_links"
+        android:title="Links" />
+</menu>

@@ -1,0 +1,4 @@
+Android Studio is the official integrated development environment (IDE) for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development.
+It is available for download on Windows, macOS and Linux based operating systems.
+It is a replacement for the Eclipse Android Development Tools (E-ADT) as the primary IDE for native Android application development.
+Android Studio is licensed under the Apache license but it ships with some SDK updates that are under a non-free license, making it not open source.

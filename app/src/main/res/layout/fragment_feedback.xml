@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="30dp"
+    android:background="#EFE8DF"
+    tools:context=".AboutMeFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:drawableRight="@drawable/smartwolf"
+        android:textSize="30dp"
+        android:fontFamily="@font/pacifico"
+        android:text="Feedback" />
+
+    <EditText
+        android:id="@+id/etFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:lines="10"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:hint="Write here"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/bSaveFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save" />
+
+    <CheckBox
+        android:id="@+id/chbSayWrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Say and write" />
+
+    <Button
+        android:id="@+id/bSayWrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click for say and write" />
+
+    <Button
+        android:id="@+id/bRecordAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Click for save audiofile" />
+
+</LinearLayout>

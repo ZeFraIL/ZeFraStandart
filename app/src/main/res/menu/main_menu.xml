@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_battery_check"
+        android:title="Turn battery status check on/off"
+        android:checkable="true" />
+
+    <item
+        android:id="@+id/action_tts_check"
+        android:title="Turn on/off sound commentary"
+        android:checkable="true" />
+
+    <item
+        android:id="@+id/action_reminder"
+        android:title="Reminder" />
+
+    <item
+        android:id="@+id/action_go_back"
+        android:title="Return to the previous screen" />
+
+    <item
+        android:id="@+id/action_exit"
+        android:title="Exit from app" />
+
+    <item
+        android:id="@+id/action_restart"
+        android:title="Restart app" />
+
+
+</menu>
