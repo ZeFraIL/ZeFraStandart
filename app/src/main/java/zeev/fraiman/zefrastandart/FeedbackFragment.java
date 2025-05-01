@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaRecorder;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -22,6 +26,7 @@ import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -44,7 +49,6 @@ public class FeedbackFragment extends Fragment {
                         String spokenText = speechResult.get(0);
                         etFeedback.setText(spokenText);
                         saveTextToFile(spokenText);
-                        saveAudioToInternalStorage(result.getData());
                     }
                 }
             }
@@ -53,8 +57,7 @@ public class FeedbackFragment extends Fragment {
     private final BroadcastReceiver internetReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            isInternetAvailable = cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+            updateInternetAvailability(context);
             updateUIState();
         }
     };
@@ -68,15 +71,15 @@ public class FeedbackFragment extends Fragment {
         bSaveFeedback = view.findViewById(R.id.bSaveFeedback);
         chbSayWrite = view.findViewById(R.id.chbSayWrite);
         bSayWrite = view.findViewById(R.id.bSayWrite);
-        Button bRecordAudio = view.findViewById(R.id.bRecordAudio);
+        bRecordAudio = view.findViewById(R.id.bRecordAudio);
 
         bRecordAudio.setOnClickListener(v -> {
             if (mediaRecorder == null) {
                 startAudioRecording();
-                bRecordAudio.setText("STOP record");
+                bRecordAudio.setText(getString(R.string.stop_record));
             } else {
                 stopAudioRecording();
-                bRecordAudio.setText("START record");
+                bRecordAudio.setText(getString(R.string.start_record));
             }
         });
 
@@ -90,12 +93,14 @@ public class FeedbackFragment extends Fragment {
         bSayWrite.setOnClickListener(v -> {
             if (isInternetAvailable && chbSayWrite.isChecked()) {
                 startSpeechToText();
+            } else {
+                Toast.makeText(requireContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
         });
 
         bSaveFeedback.setOnClickListener(v -> saveTextToFile(etFeedback.getText().toString()));
 
-        updateUIState(); // Устанавливаем начальное состояние кнопок
+        updateUIState();
         return view;
     }
 
@@ -115,6 +120,18 @@ public class FeedbackFragment extends Fragment {
         bSayWrite.setEnabled(isInternetAvailable);
     }
 
+    private void updateInternetAvailability(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            Network network = cm.getActiveNetwork();
+            NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
+            isInternetAvailable = capabilities != null &&
+                    capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        } else {
+            isInternetAvailable = false;
+        }
+    }
+
     private void startSpeechToText() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -123,24 +140,12 @@ public class FeedbackFragment extends Fragment {
     }
 
     private void saveTextToFile(String text) {
-        try {
-            File file = new File(requireContext().getFilesDir(), "feedback.txt");
-            FileOutputStream fos = new FileOutputStream(file, true);
+        File file = new File(requireContext().getFilesDir(), "feedback.txt");
+        try (FileOutputStream fos = new FileOutputStream(file, true)) {
             fos.write((text + "\n").getBytes());
-            fos.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void saveAudioToInternalStorage(Intent data) {
-        try {
-            File file = new File(requireContext().getFilesDir(), "feedback_audio.txt");
-            FileOutputStream fos = new FileOutputStream(file, true);
-            fos.write(("Audio Recorded\n").getBytes());
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(requireContext(), R.string.save_error, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -156,24 +161,25 @@ public class FeedbackFragment extends Fragment {
 
             mediaRecorder.prepare();
             mediaRecorder.start();
-            System.out.println("Start recording audio");
+            Toast.makeText(requireContext(), R.string.start_recording, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error in recording audio: " + e.getMessage());
+            Toast.makeText(requireContext(), R.string.record_error, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void stopAudioRecording() {
-        try {
-            if (mediaRecorder != null) {
+        if (mediaRecorder != null) {
+            try {
                 mediaRecorder.stop();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+                Toast.makeText(requireContext(), R.string.stop_record_error, Toast.LENGTH_SHORT).show();
+            } finally {
                 mediaRecorder.release();
                 mediaRecorder = null;
-                System.out.println("Finish recording. File: " + audioFile.getAbsolutePath());
+                Toast.makeText(requireContext(), R.string.finish_recording, Toast.LENGTH_SHORT).show();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error in recording audio: " + e.getMessage());
         }
     }
 }

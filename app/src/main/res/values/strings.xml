@@ -3,4 +3,12 @@
     <string name="aboutme">It\'s all about me:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="start_recording">Start recording</string>
+    <string name="record_error">Record error</string>
+    <string name="stop_record_error">Stop record error</string>
+    <string name="finish_recording">Finish recording</string>
+    <string name="save_error">Save error</string>
+    <string name="no_internet">Not found connect to Internet</string>
+    <string name="stop_record">Stop record</string>
+    <string name="start_record">Start record</string>
 </resources>
