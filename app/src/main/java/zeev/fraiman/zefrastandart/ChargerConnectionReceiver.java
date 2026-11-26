@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 public class ChargerConnectionReceiver extends BroadcastReceiver {
 
-    private boolean warningDisplayed = false; // Флаг для предотвращения повторного предупреждения при 15%
-    private Handler handler; // Для выполнения задач с задержкой
+    private boolean warningDisplayed = false; // Flag to prevent repeated warning at 15%
+    private Handler handler; // For executing tasks with delay
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -22,15 +22,15 @@ public class ChargerConnectionReceiver extends BroadcastReceiver {
         int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 
-        // Рассчитываем процент заряда
+        // Calculate battery percentage
         int batteryPct = (int) ((level / (float) scale) * 100);
 
-        // Проверяем подключение к зарядному устройству
+        // Check charger connection
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
 
         if (isCharging) {
-            // Если зарядное устройство подключено, отменяем любые предупреждения
+            // If charger is connected, cancel any warnings
             warningDisplayed = false;
             if (handler != null) {
                 handler.removeCallbacksAndMessages(null);
@@ -38,31 +38,31 @@ public class ChargerConnectionReceiver extends BroadcastReceiver {
             return;
         }
 
-        // Действия в зависимости от уровня заряда
+        // Actions depending on battery level
         if (batteryPct == 15 && !warningDisplayed) {
-            // Разовое сообщение при 15%
-            Toast.makeText(context, "Заряд батареи низкий! Подключите зарядное устройство.", Toast.LENGTH_LONG).show();
+            // One-time message at 15%
+            Toast.makeText(context, "Battery is low! Please connect charger.", Toast.LENGTH_LONG).show();
             warningDisplayed = true;
         } else if (batteryPct == 10) {
-            // Сообщение через каждую минуту при 10%
+            // Message every minute at 10%
             if (handler == null) {
                 handler = new Handler();
             }
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(context, "Критический заряд батареи! Срочно подключите зарядное устройство.", Toast.LENGTH_LONG).show();
-                    handler.postDelayed(this, 60000); // Повтор через минуту
+                    Toast.makeText(context, "Critical battery level! Urgently connect charger.", Toast.LENGTH_LONG).show();
+                    handler.postDelayed(this, 60000); // Repeat after a minute
                 }
             }, 0);
         } else if (batteryPct == 5) {
-            // Закрытие приложения при 5%
+            // Close app at 5%
             if (handler != null) {
                 handler.removeCallbacksAndMessages(null);
             }
-            Toast.makeText(context, "Заряд батареи критически низкий! Приложение будет закрыто.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Battery level critically low! Application will close.", Toast.LENGTH_LONG).show();
 
-            // Принудительное завершение приложения
+            // Force exit application
             System.exit(0);
         }
     }

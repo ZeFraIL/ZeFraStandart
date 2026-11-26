@@ -15,10 +15,10 @@ public class NotificationChannels {
             NotificationManager manager = context.getSystemService(NotificationManager.class);
 
             NotificationChannel lowChannel = new NotificationChannel(
-                    CHANNEL_LOW, "Обычный приоритет", NotificationManager.IMPORTANCE_LOW);
+                    CHANNEL_LOW, "Default priority", NotificationManager.IMPORTANCE_LOW);
 
             NotificationChannel highChannel = new NotificationChannel(
-                    CHANNEL_HIGH, "Высокий приоритет", NotificationManager.IMPORTANCE_HIGH);
+                    CHANNEL_HIGH, "High priority", NotificationManager.IMPORTANCE_HIGH);
 
             manager.createNotificationChannel(lowChannel);
             manager.createNotificationChannel(highChannel);

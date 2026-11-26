@@ -5,24 +5,24 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Заголовок уведомления -->
+    <!-- Notification title -->
     <TextView
         android:id="@+id/notification_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Заголовок"
+        android:text="Title"
         android:textStyle="bold"
         android:textSize="18sp" />
 
-    <!-- Текст уведомления -->
+    <!-- Notification text -->
     <TextView
         android:id="@+id/notification_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Текст уведомления"
+        android:text="Notification text"
         android:layout_marginTop="8dp" />
 
-    <!-- Изображение в уведомлении -->
+    <!-- Image in notification -->
     <ImageView
         android:id="@+id/notification_image"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:scaleType="centerCrop"
         android:layout_marginTop="8dp" />
 
-    <!-- Кнопки -->
+    <!-- Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,13 +43,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Закрыть" />
+            android:text="Close" />
 
         <Button
             android:id="@+id/btn_open_app"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Открыть приложение" />
+            android:text="Open app" />
     </LinearLayout>
 </LinearLayout>

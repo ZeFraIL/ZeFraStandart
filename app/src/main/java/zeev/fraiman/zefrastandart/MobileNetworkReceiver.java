@@ -31,7 +31,7 @@ public class MobileNetworkReceiver extends BroadcastReceiver {
             bCallme.setEnabled(isMobileNetworkAvailable);
 
             if (!isMobileNetworkAvailable) {
-                Toast.makeText(context, "Нет подключения к мобильной сети!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "No mobile network connection!", Toast.LENGTH_SHORT).show();
                 MediaPlayer mp=MediaPlayer.create(context.getApplicationContext(), R.raw.alarm);
                 mp.start();
             }

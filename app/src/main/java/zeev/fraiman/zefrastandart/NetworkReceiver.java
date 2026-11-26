@@ -22,6 +22,6 @@ public class NetworkReceiver extends BroadcastReceiver {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-        emailButton.setEnabled(isConnected); // Блокируем/разблокируем кнопку
+        emailButton.setEnabled(isConnected); // Enable/disable button
     }
 }

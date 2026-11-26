@@ -20,11 +20,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 public class CustomAlertDialog {
 
-    //ТАК ДЕЛАТЬ ВЫЗОВ!!!
+    // HOW TO CALL THIS!!!
     /*
-    // Инициализация CustomAlertDialog и показ видео
+    // CustomAlertDialog initialization and video playback
         CustomAlertDialog customAlertDialog = new CustomAlertDialog(this);
-        customAlertDialog.showDialog("dQw4w9WgXcQ"); // Укажите ID видео
+        customAlertDialog.showDialog("dQw4w9WgXcQ"); // Specify video ID
      */
 
     private Context context;
@@ -34,35 +34,35 @@ public class CustomAlertDialog {
     }
 
     public void showDialog(String videoId) {
-        // Создаем билдера для диалога
+        // Create dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
-        // Загружаем layout для диалога
+        // Load dialog layout
         View dialogView = inflater.inflate(R.layout.dialog_layout, null);
 
         builder.setView(dialogView);
 
-        // Инициализация YouTubePlayerView
+        // YouTubePlayerView initialization
         YouTubePlayerView youTubePlayerView = dialogView.findViewById(R.id.youtube_player_view);
 
-        // Подключаем жизненный цикл
+        // Connect lifecycle
         if (context instanceof AppCompatActivity) {
             ((AppCompatActivity) context).getLifecycle().addObserver(youTubePlayerView);
         }
 
-        // Добавляем слушатель для YouTubePlayer
+        // Add listener for YouTubePlayer
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                // Загружаем видео по ID
-                youTubePlayer.loadVideo(videoId, 0); // Начинаем с 0 секунды
+                // Load video by ID
+                youTubePlayer.loadVideo(videoId, 0); // Start from 0 seconds
             }
         });
 
-        // Настроим кнопку для закрытия диалога
+        // Configure button to close dialog
         builder.setPositiveButton("Close", (dialog, which) -> dialog.dismiss());
 
-        // Показываем диалог
+        // Show dialog
         builder.show();
     }
 
@@ -77,25 +77,25 @@ public class CustomAlertDialog {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(webView, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                800 // Высота WebView в пикселях (можно изменить по необходимости)
+                800 // WebView height in pixels (can be changed if needed)
         ));
 
-        // Создаем AlertDialog
+        // Create AlertDialog
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setView(layout)
                 .setCancelable(true)
                 .create();
 
-        // Создаем кнопку "Закрыть" и добавляем в Layout
+        // Create "Close" button and add to Layout
         Button closeButton = new Button(context);
         closeButton.setText("Close");
-        closeButton.setOnClickListener(v -> dialog.dismiss()); // Здесь dialog уже определен
+        closeButton.setOnClickListener(v -> dialog.dismiss()); // Here dialog is already defined
         layout.addView(closeButton, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         ));
 
-        // Показываем диалог
+        // Show dialog
         dialog.show();
     }
 

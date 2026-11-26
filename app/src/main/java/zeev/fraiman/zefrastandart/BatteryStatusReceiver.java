@@ -24,34 +24,34 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
             if ((batteryPct <= 15 && lastShownPercentage == -1) || (lastShownPercentage > batteryPct && batteryPct < lastShownPercentage)) {
                 lastShownPercentage = batteryPct;
 
-                // Создание кастомного Toast
+                // Create custom Toast
                 Toast customToast = new Toast(context);
 
-                // Создание корневого Layout
+                // Create root Layout
                 LinearLayout toastLayout = new LinearLayout(context);
                 toastLayout.setOrientation(LinearLayout.HORIZONTAL);
                 toastLayout.setPadding(20, 10, 20, 10);
                 toastLayout.setGravity(Gravity.CENTER_VERTICAL);
-                toastLayout.setBackgroundColor(0xFFFF0000); // Красный фон
+                toastLayout.setBackgroundColor(0xFFFF0000); // Red background
 
-                // Добавление иконки
+                // Add icon
                 ImageView icon = new ImageView(context);
-                icon.setImageResource(R.drawable.low_level_battery); // Замените на свою иконку
-                LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(100, 100); // Размеры иконки
-                iconParams.setMargins(0, 0, 20, 0); // Отступы
+                icon.setImageResource(R.drawable.low_level_battery); // Replace with your icon
+                LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(100, 100); // Icon dimensions
+                iconParams.setMargins(0, 0, 20, 0); // Margins
                 icon.setLayoutParams(iconParams);
 
-                // Добавление текста
+                // Add text
                 TextView textView = new TextView(context);
-                textView.setText("Заряд слишком низкий: " + batteryPct + "%");
+                textView.setText("Battery level too low: " + batteryPct + "%");
                 textView.setTextSize(18f);
-                textView.setTextColor(0xFFFFFFFF); // Белый текст
+                textView.setTextColor(0xFFFFFFFF); // White text
 
-                // Добавление элементов в Layout
+                // Add elements to Layout
                 toastLayout.addView(icon);
                 toastLayout.addView(textView);
 
-                // Настройка Toast
+                // Configure Toast
                 customToast.setView(toastLayout);
                 customToast.setDuration(Toast.LENGTH_LONG);
                 customToast.setGravity(Gravity.CENTER, 0, 0);

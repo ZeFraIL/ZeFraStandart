@@ -25,22 +25,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Время в секундах -->
+            <!-- Time in seconds -->
             <EditText
                 android:id="@+id/etInterval"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Введите интервал (в секундах)"
+                android:hint="Enter interval (in seconds)"
                 android:inputType="number" />
 
-            <!-- Выбор времени -->
+            <!-- Time selection -->
             <TimePicker
                 android:id="@+id/timePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner" />
 
-            <!-- Тип уведомления -->
+            <!-- Notification type -->
             <RadioGroup
                 android:id="@+id/rgNotificationType"
                 android:layout_width="match_parent"
@@ -52,31 +52,31 @@
                     android:id="@+id/rbSingle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Одноразовое"
+                    android:text="One-time"
                     android:checked="true" />
 
                 <RadioButton
                     android:id="@+id/rbRepeating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Повторяющееся" />
+                    android:text="Repeating" />
             </RadioGroup>
 
-            <!-- Интервал повторения -->
+            <!-- Repeat interval -->
             <EditText
                 android:id="@+id/etRepeatPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Введите период повторения (в секундах)"
+                android:hint="Enter repeat period (in seconds)"
                 android:inputType="number"
                 android:visibility="gone" />
 
-            <!-- Кнопка установки уведомления -->
+            <!-- Set notification button -->
             <Button
                 android:id="@+id/btnSetNotification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Установить уведомление"
+                android:text="Set notification"
                 android:layout_marginTop="16dp" />
         </LinearLayout>
     </ScrollView>

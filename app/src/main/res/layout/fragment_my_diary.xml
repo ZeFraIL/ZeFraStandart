@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".MyDiaryFragment">
 
-    <!-- Ваш кастомный Toolbar -->
+    <!-- Custom Toolbar -->
     <zeev.fraiman.zefrastandart.CustomToolbar
         android:id="@+id/custom_toolbar"
         android:layout_width="wrap_content"

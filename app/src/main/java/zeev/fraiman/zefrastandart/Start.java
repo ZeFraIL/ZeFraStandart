@@ -30,6 +30,8 @@ public class Start extends AppCompatActivity {
 
         context=this;
 
+        NotificationChannels.createNotificationChannels(context);
+
         HelperDB helperDB=new HelperDB(context);
         SQLiteDatabase db=helperDB.getWritableDatabase();
         db.close();

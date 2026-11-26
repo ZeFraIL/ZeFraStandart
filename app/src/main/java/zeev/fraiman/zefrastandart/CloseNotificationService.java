@@ -10,8 +10,8 @@ public class CloseNotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(1); // Удаляем уведомление с ID 1
-        stopSelf(); // Завершаем сервис
+        notificationManager.cancel(1); // Remove notification with ID 1
+        stopSelf(); // Stop service
         return START_NOT_STICKY;
     }
 

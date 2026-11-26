@@ -1,6 +1,5 @@
 package zeev.fraiman.zefrastandart;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -24,15 +23,14 @@ public class GuideFragment extends Fragment {
     private LinearLayout LL_guide;
     private final Button[] buttons = new Button[12];
     private final TextView[] textViews = new TextView[12];
-    private final int[] textFiles={R.raw.part1};
-    int indexTV=-1;
+    private final int[] textFiles = {R.raw.part1};
+    int indexTV = -1;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_guide, container, false);
+        View view = inflater.inflate(R.layout.fragment_guide, container, false);
 
         LL_guide = view.findViewById(R.id.LL_guide);
 
@@ -58,7 +56,7 @@ public class GuideFragment extends Fragment {
             final int index = i;
             button.setOnClickListener(v -> {
                 if (textViews[index].getVisibility() == View.GONE) {
-                    indexTV=index;
+                    indexTV = index;
                     new ReadFileTask().execute();
                     textViews[index].setVisibility(View.VISIBLE);
                 } else {
@@ -88,7 +86,8 @@ public class GuideFragment extends Fragment {
         protected String doInBackground(Void... voids) {
             StringBuilder stringBuilder = new StringBuilder();
             try {
-                InputStream inputStream = getResources().openRawResource(textFiles[indexTV]);
+                int resId = (indexTV >= 0 && indexTV < textFiles.length) ? textFiles[indexTV] : textFiles[0];
+                InputStream inputStream = getResources().openRawResource(resId);
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader reader = new BufferedReader(inputStreamReader);
                 String line;
@@ -105,7 +104,9 @@ public class GuideFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            textViews[indexTV].setText(result);
+            if (indexTV >= 0 && indexTV < textViews.length && textViews[indexTV] != null) {
+                textViews[indexTV].setText(result);
+            }
             Toast.makeText(requireContext(), "Reading completed", Toast.LENGTH_SHORT).show();
         }
     }
